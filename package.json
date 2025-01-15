@@ -1,0 +1,25 @@
+{
+  "name": "@omnedia/ngx-halo",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "@angular/common": "^18.0.0",
+    "@angular/core": "^18.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "npm",
+    "background",
+    "animation",
+    "halo",
+    "gradient",
+    "lights"
+  ],
+  "repository": {
+    "url": "https://github.com/omnedia/ngx-halo"
+  },
+  "author": "Markus Block (markus.block@omnedia.com)",
+  "license": "MIT"
+}
