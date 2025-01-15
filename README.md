@@ -68,8 +68,8 @@ Use the component in your template:
 - `interactive` (optional): A boolean to enable or disable mouse interaction. Defaults to `true`.
 - `position` (optional): Sets the halo's initial position. Accepts values like `'center'`, `'top-left'`, `'bottom-right'`, etc.
 - `haloSize` (optional): A string defining the halo's size (e.g., `'300px'`).
-- `haloColors` (optional): A string representing the gradient colors for the halo effect. Default `#5fffda 20%, #46a8ff 50%, #cc32f6 100%`.
-- `haloShadow` (optional): A string defining the halo's box shadow. Default `-60px -60px 100px rgba(234, 255, 95, 0.8), 0 0 80px rgba(244, 173, 108, 0.5), 60px 60px 120px rgba(225, 71, 181, 0.6)`.
+- `haloColors` (optional): A string representing the gradient colors for the halo effect. Default `'#5fffda 20%, #46a8ff 50%, #cc32f6 100%'`.
+- `haloShadow` (optional): A string defining the halo's box shadow. Default `'-60px -60px 100px rgba(234, 255, 95, 0.8), 0 0 80px rgba(244, 173, 108, 0.5), 60px 60px 120px rgba(225, 71, 181, 0.6)'`.
 - `styleClass` (optional): A custom CSS class for additional styling.
 
 ## Example
