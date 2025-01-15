@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { CommonModule, isPlatformBrowser } from "@angular/common";
-import { HaloPosition } from "../../../../src/app/halo.type";
+import { HaloPosition } from "./halo.types";
 
 @Component({
   selector: "om-halo",
