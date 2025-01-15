@@ -1,5 +1,12 @@
 # ngx-halo
 
+<a href="https://ngxui.com" target="_blank" style="display: flex;gap: .5rem;align-items: center;cursor: pointer; padding: 0 0 0 0; height: fit-content;">
+  <img src="https://ngxui.com/assets/img/ngxui-logo.png" style="width: 64px;height: 64px;">
+</a>
+
+This Library is part of the NGXUI ecosystem. <br>
+View all available components at https://ngxui.com
+
 `@omnedia/ngx-halo` is an Angular library that creates a beautiful, animated halo effect. This component provides a circular, gradient-based effect with smooth animations and interactive mouse tracking. It's perfect for enhancing the visual experience of your Angular applications.
 
 ## Features
