@@ -41,6 +41,7 @@ export class NgxHaloComponent implements OnDestroy, AfterViewInit {
   @Input("haloSize")
   set haloSize(size: string) {
     this.style["--om-halo-circle-size"] = size;
+    this.updateHaloShadow(this.currentShadowColors);
   }
 
   @Input("haloColors")
@@ -48,10 +49,21 @@ export class NgxHaloComponent implements OnDestroy, AfterViewInit {
     this.style["--om-halo-circle-colors"] = colors;
   }
 
-  @Input("haloShadow")
-  set haloShadow(shadow: string) {
-    this.style["--om-halo-circle-shadow"] = shadow;
+  @Input("haloShadowColors")
+  set haloShadow(colors: string[]) {
+    if (colors.length !== 3) {
+      throw new Error("ShadowColors must contain exactly 3 colors!");
+    }
+
+    this.currentShadowColors = colors;
+    this.updateHaloShadow(colors);
   }
+
+  private currentShadowColors: string[] = [
+    "rgba(234, 255, 95, 0.8)",
+    "rgba(244, 173, 108, 0.5)",
+    "rgba(225, 71, 181, 0.6)",
+  ];
 
   style: any = {};
 
@@ -141,7 +153,7 @@ export class NgxHaloComponent implements OnDestroy, AfterViewInit {
       "--halo-y-offset",
       `${this.currentY / 10 + 50}%`,
     );
-    this.circleElement.nativeElement.style.transform = `translate(${this.currentX / 20}px, ${this.currentY / 20}px)`;
+    this.circleElement.nativeElement.style.transform = `translate(${this.currentX / 10}px, ${this.currentY / 10}px)`;
 
     this.animationFrameId = requestAnimationFrame(() => this.animateCircle());
   }
@@ -160,8 +172,8 @@ export class NgxHaloComponent implements OnDestroy, AfterViewInit {
       this.targetX = 0;
       this.targetY = 0;
 
-      this.currentX += (this.targetX - this.currentX) * 0.03;
-      this.currentY += (this.targetY - this.currentY) * 0.03;
+      this.currentX += (this.targetX - this.currentX) * 0.02;
+      this.currentY += (this.targetY - this.currentY) * 0.02;
 
       this.haloElement.nativeElement.style.setProperty(
         "--halo-x-offset",
@@ -171,7 +183,7 @@ export class NgxHaloComponent implements OnDestroy, AfterViewInit {
         "--halo-y-offset",
         `${this.currentY / 10 + 50}%`,
       );
-      this.circleElement.nativeElement.style.transform = `translate(${this.currentX / 20}px, ${this.currentY / 20}px)`;
+      this.circleElement.nativeElement.style.transform = `translate(${this.currentX / 10}px, ${this.currentY / 10}px)`;
 
       if (Math.abs(this.currentX) < 0.1 && Math.abs(this.currentY) < 0.1) {
         cancelAnimationFrame(this.animationFrameId!);
@@ -189,5 +201,21 @@ export class NgxHaloComponent implements OnDestroy, AfterViewInit {
 
     cancelAnimationFrame(this.animationFrameId!);
     returnToCenterAnimation();
+  }
+
+  private updateHaloShadow(colors: string[]): void {
+    const numericSize =
+      parseInt(this.style["--om-halo-circle-size"].replace("px", ""), 10) ||
+      300;
+
+    const offset1 = (numericSize * 60) / 300;
+    const offset2 = (numericSize * 80) / 300;
+    const offset3 = (numericSize * 120) / 300;
+
+    this.style["--om-halo-circle-shadow"] = `
+        ${-offset1}px ${-offset1}px ${offset1}px ${colors[0]},
+        0 0 ${offset2}px ${colors[1]},
+        ${offset3}px ${offset3}px ${offset3}px ${colors[2]}
+    `;
   }
 }

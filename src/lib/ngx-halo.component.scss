@@ -16,13 +16,12 @@
     width: 100%;
     height: 100%;
     display: flex;
-    z-index: -1;
 
     .om-halo-circle {
       width: var(--om-halo-circle-size);
       height: var(--om-halo-circle-size);
       border-radius: 50%;
-      filter: blur(150px);
+      filter: blur(calc(var(--om-halo-circle-size) * 150 / 300));
       background: radial-gradient(
         circle at var(--halo-x-offset) var(--halo-y-offset),
         var(--om-halo-circle-colors)
