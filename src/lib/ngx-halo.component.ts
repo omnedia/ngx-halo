@@ -1,16 +1,17 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   Inject,
   Input,
   OnDestroy,
   PLATFORM_ID,
+  signal,
   ViewChild,
 } from "@angular/core";
-import { CommonModule, isPlatformBrowser } from "@angular/common";
-import { HaloPosition } from "./ngx-halo.types";
+import {CommonModule, isPlatformBrowser} from "@angular/common";
+import {HaloPosition} from "./ngx-halo.types";
 
 @Component({
   selector: "om-halo",
@@ -18,12 +19,13 @@ import { HaloPosition } from "./ngx-halo.types";
   imports: [CommonModule],
   templateUrl: "./ngx-halo.component.html",
   styleUrl: "./ngx-halo.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NgxHaloComponent implements OnDestroy, AfterViewInit {
-  @ViewChild("OmHaloElement", { static: false })
+  @ViewChild("OmHaloElement", {static: false})
   private haloElement!: ElementRef<HTMLDivElement>;
 
-  @ViewChild("OmHaloCircle", { static: false })
+  @ViewChild("OmHaloCircle", {static: false})
   private circleElement!: ElementRef<HTMLDivElement>;
 
   @Input()
@@ -74,12 +76,12 @@ export class NgxHaloComponent implements OnDestroy, AfterViewInit {
   private animationFrameId: number | null = null;
 
   private intersectionObserver?: IntersectionObserver;
-  isInView = false;
+  isInView = signal(false);
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
-    private readonly cdr: ChangeDetectorRef,
-  ) {}
+  ) {
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -101,12 +103,7 @@ export class NgxHaloComponent implements OnDestroy, AfterViewInit {
 
   private setupIntersectionObserver(): void {
     this.intersectionObserver = new IntersectionObserver(([entry]) => {
-      const wasInView = this.isInView;
-      this.isInView = entry.isIntersecting;
-
-      if (wasInView !== this.isInView) {
-        this.cdr.detectChanges();
-      }
+      this.isInView.set(entry.isIntersecting);
     });
     this.intersectionObserver.observe(this.haloElement.nativeElement);
   }
@@ -190,7 +187,7 @@ export class NgxHaloComponent implements OnDestroy, AfterViewInit {
         this.animationFrameId = null;
         this.currentX = 0;
         this.currentY = 0;
-        if (this.animate && this.isInView) {
+        if (this.animate && this.isInView()) {
           this.circleElement.nativeElement.classList.add("animate");
         }
         return;

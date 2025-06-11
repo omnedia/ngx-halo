@@ -2,7 +2,7 @@
   <div class="om-halo-background" [ngClass]="position">
     <div
       class="om-halo-circle"
-      [class.animate]="animate && isInView"
+      [class.animate]="animate && isInView()"
       #OmHaloCircle
     ></div>
   </div>
